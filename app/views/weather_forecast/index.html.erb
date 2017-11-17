@@ -1,0 +1,6 @@
+<%= form_tag("/index", method: "get", remote: true) do %>
+    <%= label_tag :city, "City name" %>
+    <%= text_field_tag :city %>
+    <%= submit_tag "Show weather forecast" %>
+<% end %>
+<div id="wheather_content"></div>
