@@ -1,1 +1,19 @@
-console.log("<%= @city %>");
+(function ($){
+    var data = <%= @data["json_list"].html_safe %>;
+    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+    $('#wheather_content').append('<div><h2>City: <%= @city %></h2></div>');
+    $('#wheather_content').append('<div><h2>Feels like: <%= @data["feels_like"] %>ºC</h2></div>');
+    if (<%= @data["cod"] %> == '200'){
+        $.each(data, function( index, object ) {
+            var date = new Date(object.dt_txt);
+            $('#wheather_content').append('<p>' + days[date.getDay()] + ' ' + date.getDate() + '</p>');
+            $('#wheather_content').append('<p>' + date.getHours() + ':00' + '</p>');
+            $('#wheather_content').append('<ul>');
+            $('#wheather_content').append('<li><span style="font-size: 20px; font-weight: bold;">' + object.main.temp + 'ºC</span></li>');
+            $('#wheather_content').append('<li>' + object.weather[0].description + '</li>');
+            $('#wheather_content').append('<li>' + object.main.temp_min + 'ºC Low</li>');
+            $('#wheather_content').append('</ul>');
+        });
+    }
+})(jQuery);
