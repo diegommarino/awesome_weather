@@ -1,6 +1,30 @@
-<%= form_tag("/index", method: "get", remote: true) do %>
-    <%= label_tag :city, "City name" %>
-    <%= text_field_tag :city %>
-    <%= submit_tag "Show weather forecast" %>
-<% end %>
-<div id="wheather_content"></div>
+<div class="padding40">
+    <h1 class="leader align-center fg-yellow">AWESOME WEATHER</h1>
+    <%= form_tag("/index", method: "get", remote: true) do %>
+        <div class="grid">
+            <div class="row cells12">
+                <div class="cell offset2 colspan8 input-control text align-center">
+                    <%= text_field_tag :city,"", placeholder: "Choose a city" %>
+                </div>
+            </div>
+            <div class="row cells3">
+                <div class="cell offset1 align-center">
+                    <%= submit_tag "Show weather forecast" %>
+                </div>
+            </div>
+        </div>
+    <% end %>
+
+    <div id="weather-now"></div>
+
+    <div class="grid">
+        <div class="row cells12">
+            <div class="cell offset2 colspan8">
+                <div id="weather-tiles" class="tile-container" style="margin: auto;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="tiles-dialogs"></div>
+</div>
