@@ -14,4 +14,7 @@
 //= require turbolinks
 //= require jquery
 //= require jquery_ujs
+//= require metro-ui/build/js/metro
 //= require_tree .
+
+$.extend($.metro.dialog.prototype.options, {closeButton: true, overlay: true, overlayClickClose: true});

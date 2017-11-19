@@ -1,19 +1,118 @@
 (function ($){
-    var data = <%= @data["json_list"].html_safe %>;
     var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    var tiles_colors = ['lime', 'green', 'emerald', 'teal', 'blue', 'cyan', 'cobalt', 'indigo', 'violet', 'pink', 'magenta', 'crimson', 'red', 'orange', 'amber', 'yellow', 'brown', 'olive']
+    $('#weather-now').empty();
+    $('.tile-container').empty();
+    $('#tiles-dialogs').empty();
 
-    $('#wheather_content').append('<div><h2>City: <%= @city %></h2></div>');
-    $('#wheather_content').append('<div><h2>Feels like: <%= @data["feels_like"] %>ºC</h2></div>');
-    if (<%= @data["cod"] %> == '200'){
-        $.each(data, function( index, object ) {
-            var date = new Date(object.dt_txt);
-            $('#wheather_content').append('<p>' + days[date.getDay()] + ' ' + date.getDate() + '</p>');
-            $('#wheather_content').append('<p>' + date.getHours() + ':00' + '</p>');
-            $('#wheather_content').append('<ul>');
-            $('#wheather_content').append('<li><span style="font-size: 20px; font-weight: bold;">' + object.main.temp + 'ºC</span></li>');
-            $('#wheather_content').append('<li>' + object.weather[0].description + '</li>');
-            $('#wheather_content').append('<li>' + object.main.temp_min + 'ºC Low</li>');
-            $('#wheather_content').append('</ul>');
+    if (<%= @data["cod"] %> == 200){
+        var data_now = <%= @data_now || 0 %>;
+        appendWeatherNow(data_now);
+
+        var data = <%= @data["json_list"] || [] %>;
+        var tile_color = 0;
+        $.each(data, function( index, weather_object ) {
+            if (index >= tiles_colors.length){
+                tile_color = 0;
+            }
+            appendTiles(index, tile_color, weather_object);
+            appendTilesDialogs(index, tile_color, weather_object)
+            tile_color++;
         });
+    }else{
+        appendWeatherNow(null)
+    }
+
+    function appendWeatherNow(weather_object){
+        var weather_html = '';
+        if (weather_object == null){
+            weather_html = '\
+            <div class="grid text-shadow">\
+                <div class="row cells1">\
+                    <div class="cell fg-white align-center">\
+                        <h3>Was not possible to retrieve weather for the city <%= @city %>.</h3>\
+                    <div>\
+                <div>\
+            <div>\
+            ';
+        }else{
+            weather_html = '\
+            <div class="flex-grid fg-white text-shadow">\
+                <div class="row cell-auto-size flex-just-center">\
+                    <div class="cell align-right">\
+                        <h1>' + weather_object.main.temp + 'º</h1>\
+                    </div>\
+                    <div class="cell align-left" style="margin: 20px 0 0 10px;">\
+                        <div>' + weather_object.weather[0].description + '</div>\
+                        <div>Feels like: ' + weather_object.feels_like + 'º</div>\
+                    </div>\
+                </div>\
+                <div class="row flex-just-center">\
+                    <div class="cell align-center">\
+                        <h1><%= @city %></h1>\
+                    </div>\
+                </div>\
+            </div>\
+            ';
+        }
+        $('#weather-now').append(weather_html);
+    }
+
+    function appendTiles(index, tile_color, weather_object){
+        var date = new Date(weather_object.dt_txt);
+        var tile_html = '\
+        <div class="tile tile-wide-y fg-white bg-' + tiles_colors[tile_color] + '" data-role="tile" onclick="showMetroDialog(\'#dialog' + index + '\');">\
+            <div class="tile-content iconic">\
+                <div class="margin20 no-margin-bottom text-shadow" style="font-size: 20px">' + days[date.getDay()] + ' ' + date.getDate() + '</div>\
+                <div class="margin20 no-margin-top text-shadow" style="font-size: 20px">' + date.getHours() + ':00</div>\
+                <span class="icon mif-' + weather_object.weather[0].icon + '"></span>\
+                <span class="tile-label margin10">\
+                    <p class="no-margin text-shadow" style="font-size: 20px">' + weather_object.main.temp + 'º</p>\
+                    <p class="no-margin text-shadow">' + weather_object.weather[0].description + '</p><br>\
+                    <p class="no-margin text-shadow">' + weather_object.main.temp_min + 'º Low</p>\
+                </span>\
+            </div>\
+        </div>\
+        ';
+        $('#weather-tiles').append(tile_html);
+    }
+
+    function appendTilesDialogs(index, tile_color, weather_object){
+        var date = new Date(weather_object.dt_txt);
+        var tile_html = '\
+        <div data-role="dialog" id="dialog' + index + '" class="fg-white bg-' + tiles_colors[tile_color] + '">\
+            <h1 class="leader align-center">' + days[date.getDay()] + ' ' + date.getDate() + '</h1>\
+            <div class="margin20">\
+                <div class="grid">\
+                    <div class="row cells1">\
+                        <div class="cell align-center">\
+                            <div class="mif-' + weather_object.weather[0].icon + ' mif-4x"></div>\
+                        </div>\
+                    </div>\
+                </div>\
+                <p>Date: ' + weather_object.dt_txt + '</p>\
+                Temperature\
+                <ul>\
+                    <li>Forcast: ' + weather_object.main.temp + 'º</li>\
+                    <li>Max: ' + weather_object.main.temp_max + 'º</li>\
+                    <li>Min: ' + weather_object.main.temp_min + 'º</li>\
+                </ul>\
+                <p>Preasure: ' + weather_object.main.pressure + ' hPa</p>\
+                <p>Sea Level: ' + weather_object.main.sea_level + ' hPa</p>\
+                <p>Ground Level: ' + weather_object.main.grnd_level + ' hPa</p>\
+                <p>Humidity: ' + weather_object.main.humidity + '%</p>\
+                <p>Weather: ' + weather_object.weather[0].description + '</p>\
+                <p>Cloudiness: ' + weather_object.clouds.all + '%</p>\
+                Wind\
+                <ul>\
+                    <li>Speed: ' + weather_object.wind.speed + 'm/s</li>\
+                    <li>Direction: ' + weather_object.wind.deg + ' degrees</li>\
+                </ul>\
+                <p>Rain Volume: ' + weather_object.wind.deg + 'mm (last 3h)</p>\
+                <p>Snow Volume: ' + weather_object.wind.deg + 'mm (last 3h)</p>\
+            </div>\
+        </div>\
+        ';
+        $('#tiles-dialogs').append(tile_html);
     }
 })(jQuery);
