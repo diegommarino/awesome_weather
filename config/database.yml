@@ -87,5 +87,7 @@ test:
 production:
   <<: *default
   database: awesome_weather_production
-  username: awesome_weather
-  password: <%= ENV['AWESOME_WEATHER_DATABASE_PASSWORD'] %>
+  username: <%= ENV['POSTGRES_USER'] %>
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  host: aa69dxsj2mmrsu.cu5m6q7uig3s.sa-east-1.rds.amazonaws.com
+  port: 5432
