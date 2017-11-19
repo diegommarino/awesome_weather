@@ -22,7 +22,6 @@ class WeatherForecastController < ApplicationController
 
     def index
         @city = params[:city]
-
         if @city.present?
             @data = get_weather_forecast(@city)
             @data_now = get_weather_now(@city)
