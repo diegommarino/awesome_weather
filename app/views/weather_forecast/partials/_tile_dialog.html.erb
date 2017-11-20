@@ -1,0 +1,30 @@
+<div data-role="dialog" id="dialog<%= indx %>" class="fg-white bg-<%= tile_color %>">
+    <h1 class="leader align-center"><%= fcst_date.strftime("%A %d") %></h1>
+    <div class="margin20">
+        <div class="grid">
+            <div class="row cells1">
+                <div class="cell align-center">
+                    <div class="mif-<%= icon %> mif-4x"></div>
+                </div>
+            </div>
+        </div>
+        <p>Date: <%= fcst_date.strftime("%d/%m/%Y - %H/%M") %></p>
+        Temperature
+        <ul>
+            <li>Forcast: <%= temp %>º</li>
+            <li>Max: <%= temp_max %>º</li>
+            <li>Min: <%= temp_min %>º</li>
+        </ul>
+        <p>Preasure: <%= pressure %> hPa</p>
+        <p>Sea Level: <%= sea_level %> hPa</p>
+        <p>Ground Level: <%= grnd_level %> hPa</p>
+        <p>Humidity: <%= humidity %>%</p>
+        <p>Weather: <%= description %></p>
+        <p>Cloudiness: <%= clouds %>%</p>
+        Wind
+        <ul>
+            <li>Speed: <%= wind_speed %>m/s</li>
+            <li>Direction: <%= wind_deg %> degrees</li>
+        </ul>
+    </div>
+</div>

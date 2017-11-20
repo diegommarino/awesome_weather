@@ -1,0 +1,12 @@
+<div class="tile tile-wide-y fg-white bg-<%= tile_color %>" data-role="tile" onclick="showMetroDialog('#dialog<%= indx %>');">
+    <div class="tile-content iconic">
+        <div class="margin20 no-margin-bottom text-shadow" style="font-size: 20px"><%= fcst_date.strftime("%A %d") %></div>
+        <div class="margin20 no-margin-top text-shadow" style="font-size: 20px"><%= fcst_date.strftime("%H:%M") %></div>
+        <span class="icon mif-<%= icon %>"></span>
+        <span class="tile-label margin10">
+            <p class="no-margin text-shadow" style="font-size: 20px"><%= temp %>º</p>
+            <p class="no-margin text-shadow"><%= description %></p><br>
+            <p class="no-margin text-shadow"><%= temp_min %>º Low</p>
+        </span>
+    </div>
+</div>
