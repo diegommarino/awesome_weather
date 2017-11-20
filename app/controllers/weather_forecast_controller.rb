@@ -53,7 +53,7 @@ class WeatherForecastController < ApplicationController
             data["feels_like"] = feels_like_temperature(wind, temp)
         end
 
-        data.to_json.html_safe
+        data
     end
 
     def get_weather_forecast(city)
@@ -66,7 +66,7 @@ class WeatherForecastController < ApplicationController
         data = response.parsed_response
 
         if data["cod"].to_i == 200
-            data["json_list"] = change_default_icons_and_weather_title(data["list"])[0..15].to_json.html_safe
+            data["list"] = change_default_icons_and_weather_title(data["list"])[0..15]
             wind = data["list"][0]["wind"]["speed"]
             temp = data["list"][0]["main"]["temp"]
             data["feels_like"] = feels_like_temperature(wind, temp)
