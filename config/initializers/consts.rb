@@ -1,0 +1,41 @@
+WEATHER_ICONS = {
+    '01d' => 'sun',
+    '01n' => 'moon',
+    '02d' => 'cloudy',
+    '02n' => 'cloud2',
+    '03d' => 'cloud3',
+    '03n' => 'cloud3',
+    '04d' => 'cloud2',
+    '04n' => 'cloudy2',
+    '09d' => 'weather4',
+    '09n' => 'weather4',
+    '10d' => 'rainy',
+    '10n' => 'rainy',
+    '11d' => 'cloud4',
+    '11n' => 'cloud4',
+    '13d' => 'snowy3',
+    '13n' => 'snowy3',
+    '50d' => 'weather3',
+    '50n' => 'weather3'
+}
+
+TILES_COLORS = [
+    'lime',
+    'green',
+    'emerald',
+    'teal',
+    'blue',
+    'cyan',
+    'cobalt',
+    'indigo',
+    'violet',
+    'pink',
+    'magenta',
+    'crimson',
+    'red',
+    'orange',
+    'amber',
+    'yellow',
+    'brown',
+    'olive'
+]

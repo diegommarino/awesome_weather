@@ -1,16 +1,15 @@
 module WeatherForecastHelper
 
     def build_tiles_and_dialogs(data)
-        tiles_colors = ['lime', 'green', 'emerald', 'teal', 'blue', 'cyan', 'cobalt', 'indigo', 'violet', 'pink', 'magenta', 'crimson', 'red', 'orange', 'amber', 'yellow', 'brown', 'olive']
         tiles_html = []
         dialogs_html = []
         tile_color = 0;
 
         data["list"].each_with_index do |info, i|
-            tile_color = 0 if i >= tiles_colors.length
+            tile_color = 0 if i >= TILES_COLORS.length
             tiles_html << build_tile(
                 i,
-                tiles_colors[tile_color],
+                TILES_COLORS[tile_color],
                 Time.parse(info["dt_txt"]),
                 info["main"]["temp"],
                 info["main"]["temp_min"],
@@ -18,7 +17,7 @@ module WeatherForecastHelper
                 info["weather"][0]["icon"])
             dialogs_html << build_dialog(
                 i,
-                tiles_colors[tile_color],
+                TILES_COLORS[tile_color],
                 Time.parse(info["dt_txt"]),
                 info)
             tile_color += 1
